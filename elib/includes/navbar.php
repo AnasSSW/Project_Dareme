@@ -39,12 +39,15 @@ $catResult = $conn->query("SELECT id, name FROM categories ORDER BY name");
 .navbar-top {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: auto auto;
   align-items: center;
   gap: 24px;
 }
 
 /* ---------- BRAND ---------- */
 .brand {
+  grid-column: 1;
+  grid-row: 1 / 3;  /* ขยายเต็มสองแถว */
   display: flex;
   align-items: center;
   gap: 14px;
@@ -52,21 +55,42 @@ $catResult = $conn->query("SELECT id, name FROM categories ORDER BY name");
 }
 
 .brand img {
-  width: 48px;
-  height: 48px;
+  width: 64px;  /* เพิ่มขนาดรูป */
+  height: 64px;
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.3);
   box-shadow: 0 0 20px rgba(255,255,255,0.5);
 }
 
-.brand-text { display: flex; flex-direction: column; }
-.brand-title { font-size: 20px; font-weight: 800; }
-.brand-subtitle { font-size: 12px; opacity: 0.9; }
+.brand-text { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 4px;
+}
+
+.brand-title { 
+  font-size: 24px;  /* เพิ่มขนาดตัวอักษร */
+  font-weight: 800; 
+  line-height: 1.2;
+}
+
+.brand-subtitle { 
+  font-size: 14px;  /* เพิ่มขนาดตัวอักษร */
+  opacity: 0.9; 
+  line-height: 1.3;
+}
 
 /* ---------- SEARCH ---------- */
-.search-box form {
-  display: flex; gap: 8px;
+.search-box {
+  grid-column: 2;
+  grid-row: 1 / 3;  /* ขยายเต็มสองแถว */
 }
+
+.search-box form {
+  display: flex; 
+  gap: 8px;
+}
+
 .search-box input {
   width: 320px;
   padding: 10px 14px;
@@ -75,7 +99,9 @@ $catResult = $conn->query("SELECT id, name FROM categories ORDER BY name");
   background: rgba(255,255,255,0.2);
   color: #fff;
 }
+
 .search-box input::placeholder { color: rgba(255,255,255,0.8); }
+
 .search-box button {
   padding: 10px 18px;
   border-radius: 12px;
@@ -93,6 +119,8 @@ $catResult = $conn->query("SELECT id, name FROM categories ORDER BY name");
   align-items: center;
   gap: 10px;
   justify-self: end;
+  grid-column: 3;
+  grid-row: 1 / 3;  /* ขยายเต็มสองแถว */
 }
 
 .username-display {
@@ -210,6 +238,9 @@ $catResult = $conn->query("SELECT id, name FROM categories ORDER BY name");
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 768px) {
   .navbar-top { grid-template-columns: 1fr; }
+  .brand { grid-row: auto; }
+  .search-box { grid-row: auto; }
+  .user-menu { grid-row: auto; }
   .search-box input { width: 100%; }
   .menu { flex-direction: column; }
 }
