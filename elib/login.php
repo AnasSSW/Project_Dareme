@@ -1,26 +1,22 @@
 <?php
 session_start();
-include "db.php"; // ไฟล์เชื่อมต่อฐานข้อมูล
+include "db.php";
 
 $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    // แปลงรหัสผ่านที่กรอกเป็น MD5
+    $email = $_POST['email'];
     $password = md5($_POST['password']);
 
-    // ค้นหาผู้ใช้
-    $sql = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
+    $sql = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows === 1) {
         $user = $result->fetch_assoc();
 
-        // ตรวจสอบรหัสผ่าน (MD5)
         if ($password === $user['password']) {
             $_SESSION['user'] = $user;
 
-            // แยกหน้า admin / user
             if ($user['role'] === 'admin') {
                 header("Location: admin_add.php");
             } else {
@@ -36,13 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="css/style_login.css">
+    <link rel="stylesheet" href="css/login.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
@@ -55,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php } ?>
 
             <div class="input-box">
-                <input type="text" name="username" placeholder="Username" required>
+                <input type="text" name="email" placeholder="E-mail" required>
                 <i class="bx bxs-user"></i>
             </div>
 
@@ -72,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="btn">Login</button>
 
             <div class="register-link">
-                <p>Don't have an account? <a href="#">Register</a></p>
+                <p>Don't have an account? <a href="register.php">Register</a></p>
             </div>
         </form>
     </div>
@@ -86,6 +84,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             password.setAttribute("type", isPassword ? "text" : "password");
             togglePassword.classList.toggle("bx-show", isPassword);
             togglePassword.classList.toggle("bx-hide", !isPassword);
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+
+            document.body.style.setProperty('--x', `${x}%`);
+            document.body.style.setProperty('--y', `${y}%`);
         });
     </script>
 </body>

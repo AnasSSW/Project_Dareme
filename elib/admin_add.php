@@ -1,28 +1,48 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) session_start();
 include "db.php";
 
-// ตรวจสอบว่า login และเป็น admin
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'admin') {
+// ตรวจสอบ admin
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
   die("หน้านี้สำหรับ Admin เท่านั้น");
 }
 
-// เมื่อกด submit ฟอร์ม
-if ($_POST) {
-  $title  = $_POST['title'];
-  $author = $_POST['author'];
-  $cover  = $_POST['cover']; // URL รูปปก
+$success = $error = "";
 
-  $sql = "INSERT INTO books (title, author, cover) 
-          VALUES ('$title', '$author', '$cover')";
+/* ดึงหมวดหมู่ทั้งหมด */
+$categories = $conn->query("SELECT id, name FROM categories ORDER BY name");
 
-  if ($conn->query($sql)) {
-    $success = "เพิ่มหนังสือเรียบร้อยแล้ว";
+/* เมื่อ submit */
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+  $title       = $_POST['title'];
+  $author      = $_POST['author'];
+  $category_id = (int)$_POST['category_id'];
+  $description = $_POST['description'];
+  $cover       = $_POST['cover'];
+
+  $stmt = $conn->prepare("
+    INSERT INTO books 
+      (title, author, category_id, description, cover, status)
+    VALUES (?, ?, ?, ?, ?, 'available')
+  ");
+
+  $stmt->bind_param(
+    "ssiss",
+    $title,
+    $author,
+    $category_id,
+    $description,
+    $cover
+  );
+
+  if ($stmt->execute()) {
+    $success = "เพิ่มหนังสือเรียบร้อยแล้ว ✅";
   } else {
-    $error = "เกิดข้อผิดพลาดในการเพิ่มหนังสือ";
+    $error = "เกิดข้อผิดพลาด: " . $conn->error;
   }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -30,31 +50,74 @@ if ($_POST) {
   <title>เพิ่มหนังสือ | Admin</title>
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
+
+  <style>
+    .form-box{
+      max-width:420px;
+      background:var(--card,#111);
+      padding:24px;
+      border-radius:16px;
+      box-shadow:0 10px 30px rgba(0,0,0,.25)
+    }
+    label{font-weight:600}
+    input, textarea, select{
+      width:100%;
+      color: white;
+      padding:10px 14px;
+      border-radius:10px;
+      border:1px solid #ccc;
+      margin-top:6px
+    }
+    button{
+      margin-top:14px;
+      padding:10px;
+      width:100%;
+      border:none;
+      border-radius:12px;
+      font-weight:700;
+      cursor:pointer;
+      background:linear-gradient(135deg,#fbbf24,#fde047)
+    }
+  </style>
 </head>
 <body>
 
 <div class="container">
   <h2 class="section-title">➕ เพิ่มหนังสือใหม่</h2>
 
-  <?php if (!empty($success)) { ?>
-    <p style="color:green;">✅ <?= $success ?></p>
-  <?php } ?>
+  <?php if ($success): ?>
+    <p style="color:#22c55e;">✅ <?= $success ?></p>
+  <?php endif; ?>
 
-  <?php if (!empty($error)) { ?>
-    <p style="color:red;">❌ <?= $error ?></p>
-  <?php } ?>
+  <?php if ($error): ?>
+    <p style="color:#ef4444;">❌ <?= $error ?></p>
+  <?php endif; ?>
 
-  <form method="post" style="max-width:400px;">
-    <label>ชื่อหนังสือ</label><br>
-    <input type="text" name="title" required><br><br>
+  <form method="post" class="form-box">
 
-    <label>ผู้แต่ง</label><br>
-    <input type="text" name="author" required><br><br>
+    <label>ชื่อหนังสือ</label>
+    <input type="text" name="title" required>
 
-    <label>URL รูปปกหนังสือ</label><br>
-    <input type="url" name="cover" placeholder="https://example.com/book.jpg" required><br><br>
+    <label>ผู้แต่ง</label>
+    <input type="text" name="author" required>
 
-    <button type="submit">บันทึกหนังสือ</button>
+    <label>หมวดหมู่</label>
+    <select name="category_id" required>
+      <option value="">-- เลือกหมวดหมู่ --</option>
+      <?php while($c = $categories->fetch_assoc()): ?>
+        <option value="<?= $c['id'] ?>">
+          <?= htmlspecialchars($c['name']) ?>
+        </option>
+      <?php endwhile; ?>
+    </select>
+
+    <label>รายละเอียดหนังสือ</label>
+    <textarea name="description" rows="4" required></textarea>
+
+    <label>URL รูปปก</label>
+    <input type="url" name="cover" required>
+
+    <button type="submit">💾 บันทึกหนังสือ</button>
   </form>
 
   <br>

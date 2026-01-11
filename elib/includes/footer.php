@@ -1,4 +1,5 @@
-* {
+<style>
+  * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -8,12 +9,6 @@
 body {
   background-color: #f5f7fa;
   color: #333;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 20px;
 }
 
 .section-title {
@@ -71,3 +66,11 @@ footer::before {
   position: relative;
   z-index: 1;
 }
+</style>
+
+<footer>
+  <div class="footer-content">
+    <p>© 2025 E-Library ICC | ห้องสมุดดิจิทัลเพื่อการเรียนรู้</p>
+    <p>present by DBTech</p>
+  </div>
+</footer>
