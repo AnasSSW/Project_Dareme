@@ -11,7 +11,7 @@ if (!isset($_SESSION['user'])) {
 $uid = $_SESSION['user']['id'];
 
 /* ดึงข้อมูล user */
-$stmt = $conn->prepare("SELECT fullname, email, phone FROM users WHERE id=?");
+$stmt = $conn->prepare("SELECT fullname, email, phone, avatar FROM users WHERE id=?");
 $stmt->bind_param("i", $uid);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
@@ -23,17 +23,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $fullname = trim($_POST['fullname']);
   $email    = trim($_POST['email']);
   $phone    = trim($_POST['phone']);
+  $avatar   = trim($_POST['avatar'] ?? '');
 
   if ($fullname && $email) {
     $stmt = $conn->prepare(
-      "UPDATE users SET fullname=?, email=?, phone=? WHERE id=?"
+      "UPDATE users SET fullname=?, email=?, phone=?, avatar=? WHERE id=?"
     );
-    $stmt->bind_param("sssi", $fullname, $email, $phone, $uid);
+    $stmt->bind_param("ssssi", $fullname, $email, $phone, $avatar, $uid);
 
     if ($stmt->execute()) {
       $_SESSION['user']['fullname'] = $fullname;
       $_SESSION['user']['email']    = $email;
       $_SESSION['user']['phone']    = $phone;
+      $_SESSION['user']['avatar']   = $avatar;
+
+      $user['fullname'] = $fullname;
+      $user['email']    = $email;
+      $user['phone']    = $phone;
+      $user['avatar']   = $avatar;
+
       $success = "บันทึกข้อมูลเรียบร้อยแล้ว";
     } else {
       $error = "เกิดข้อผิดพลาดในการบันทึก";
@@ -46,26 +54,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <title>ข้อมูลส่วนตัว</title>
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/profile1.css">
+  <meta charset="UTF-8">
+  <title>ข้อมูลส่วนตัว</title>
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/profile.css">
+
+  <style>
+        @import url('https://fonts.googleapis.com/css2?family=Itim&family=Prompt:wght@300;400;500;600;700&display=swap');
+  </style>
 </head>
 
-<body>
+<body class="profile-page">
 
 <div class="container">
   <div class="card">
 
     <div class="header">
       <div class="avatar">
-        <?= strtoupper(substr($user['fullname'],0,1)) ?>
+        <?php if(!empty($user['avatar'])): ?>
+          <img src="<?= htmlspecialchars($user['avatar']) ?>" alt="avatar">
+        <?php else: ?>
+          <?= strtoupper(substr($user['fullname'],0,1)) ?>
+        <?php endif; ?>
       </div>
+
       <div>
-        <h2 style="color: white;"><?= htmlspecialchars($user['fullname']) ?></h2>
-        <div style="color:white;font-size:14px;">
-          ข้อมูลส่วนตัว
-        </div>
+        <h2><?= htmlspecialchars($user['fullname']) ?></h2>
+        <div class="subtitle">ข้อมูลส่วนตัว</div>
+
+        <!-- ปุ่มเปลี่ยนรูป -->
+        <button type="button" class="btn-avatar" onclick="toggleAvatarInput()">
+          🖼 เปลี่ยนรูปโปรไฟล์
+        </button>
       </div>
     </div>
 
@@ -77,7 +97,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="msg-error">❌ <?= $error ?></div>
     <?php endif; ?>
 
-    <form method="post">
+    <form method="post" class="profile-form">
+
+      <!-- ซ่อนช่องใส่ลิงก์รูป -->
+      <div class="form-group avatar-input" id="avatarInput">
+        <label>ลิงก์รูปโปรไฟล์</label>
+        <input type="url" name="avatar"
+          placeholder="https://example.com/avatar.jpg"
+          value="<?= htmlspecialchars($user['avatar'] ?? '') ?>">
+      </div>
+
       <div class="form-group">
         <label>ชื่อ-นามสกุล</label>
         <input type="text" name="fullname"
@@ -97,12 +126,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           value="<?= htmlspecialchars($user['phone'] ?? '') ?>">
       </div>
 
-      <button type="submit" style="background-color: darkblue;">💾 บันทึกข้อมูล</button>
+      <button type="submit">💾 บันทึกข้อมูล</button>
     </form>
 
   </div>
 </div>
 
 <?php include "includes/footer.php"; ?>
+
+<script>
+function toggleAvatarInput(){
+  const el = document.getElementById('avatarInput');
+  el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+}
+</script>
+
 </body>
 </html>

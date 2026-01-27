@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <style>
     .form-box{
       max-width:420px;
-      background:var(--card,#111);
+      background: #4294ffff;
       padding:24px;
       border-radius:16px;
       box-shadow:0 10px 30px rgba(0,0,0,.25)
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     label{font-weight:600}
     input, textarea, select{
       width:100%;
-      color: white;
+      color: black;
       padding:10px 14px;
       border-radius:10px;
       border:1px solid #ccc;

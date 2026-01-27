@@ -30,7 +30,6 @@ $catResult = $conn->query("SELECT id, name FROM categories ORDER BY name");
 .navbar-container {
   max-width: 1200px;
   margin: auto;
-  padding: 0 20px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -63,18 +62,24 @@ $catResult = $conn->query("SELECT id, name FROM categories ORDER BY name");
 }
 
 .brand-text { 
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
   display: flex; 
   flex-direction: column; 
   gap: 4px;
 }
 
 .brand-title { 
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
   font-size: 24px;  /* เพิ่มขนาดตัวอักษร */
   font-weight: 800; 
   line-height: 1.2;
 }
 
 .brand-subtitle { 
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
   font-size: 14px;  /* เพิ่มขนาดตัวอักษร */
   opacity: 0.9; 
   line-height: 1.3;
@@ -82,16 +87,22 @@ $catResult = $conn->query("SELECT id, name FROM categories ORDER BY name");
 
 /* ---------- SEARCH ---------- */
 .search-box {
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
   grid-column: 2;
   grid-row: 1 / 3;  /* ขยายเต็มสองแถว */
 }
 
 .search-box form {
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
   display: flex; 
   gap: 8px;
 }
 
 .search-box input {
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
   width: 320px;
   padding: 10px 14px;
   border-radius: 12px;
@@ -103,6 +114,8 @@ $catResult = $conn->query("SELECT id, name FROM categories ORDER BY name");
 .search-box input::placeholder { color: rgba(255,255,255,0.8); }
 
 .search-box button {
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
   padding: 10px 18px;
   border-radius: 12px;
   border: none;
@@ -124,6 +137,8 @@ $catResult = $conn->query("SELECT id, name FROM categories ORDER BY name");
 }
 
 .username-display {
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
   padding: 8px 14px;
   background: rgba(255,255,255,0.15);
   border-radius: 10px;
@@ -157,6 +172,8 @@ $catResult = $conn->query("SELECT id, name FROM categories ORDER BY name");
 .dropdown.show { display: block; }
 
 .dropdown a {
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
   display: flex;
   gap: 10px;
   padding: 14px 18px;
@@ -192,6 +209,8 @@ $catResult = $conn->query("SELECT id, name FROM categories ORDER BY name");
 }
 
 .menu a {
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
   padding: 10px 18px;
   color: #e0f2fe;
   text-decoration: none;
@@ -244,13 +263,16 @@ $catResult = $conn->query("SELECT id, name FROM categories ORDER BY name");
   .search-box input { width: 100%; }
   .menu { flex-direction: column; }
 }
+
+
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 </style>
 
 <nav class="navbar">
   <div class="navbar-container">
     <div class="navbar-top">
       <div class="brand">
-        <img src="https://lh5.googleusercontent.com/proxy/pg2Dj_tPgZ0xpH_qYAbrUWtmZnsvHuR_Q_qtOyb2Ji2h7vJqK5OrRSafK282WorIEbaFcDve_jog5W_6ggF5geIPmRGivygAFBTlMIkQ-DpgJUcklu4APw">
+        <img src="img/logo.gif">
         <div class="brand-text">
           <span class="brand-title">E-Library</span>
           <small class="brand-subtitle">Intrachai Commercial College</small>

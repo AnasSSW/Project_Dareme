@@ -40,6 +40,10 @@ $result = $conn->query($sql);
 
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/borrow_history.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Itim&family=Prompt:wght@300;400;500;600;700&display=swap');
+    </style>
 </head>
 
 <body>

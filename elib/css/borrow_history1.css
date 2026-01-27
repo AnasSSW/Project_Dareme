@@ -1,0 +1,155 @@
+:root{
+  --bg:#ffffff;
+  --card:#f1f1f1;
+  --text:#111111;
+  --muted:#94a3b8;
+  --primary:#3b82f6;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
+}
+
+.container{
+  max-width:1200px;
+  margin:50px auto;
+  padding:0 20px;
+}
+
+h2{
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
+  font-size:28px;
+  margin-bottom:20px;
+}
+
+/* FILTER */
+.filters{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:30px;
+}
+
+.filters a{
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
+  padding:8px 18px;
+  border-radius:999px;
+  background:#2563eb;
+  color:#cbd5f5;
+  text-decoration:none;
+  font-size:14px;
+  border: none;
+  transition:.25s;
+}
+
+.filters a:hover{
+  background:#1e293b;
+}
+
+.filters a.active{
+  background:var(--primary);
+  color:white;
+  border-color:transparent;
+}
+
+/* GRID */
+.list{
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* ⭐ ใช้ auto-fill แทน auto-fit */
+  justify-content: center;  /* ⭐ จัดกึ่งกลางเมื่อ card ไม่เต็ม row */
+  gap: 26px;
+  align-items: stretch;
+}
+
+/* CARD */
+.card{
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  transition: transform .25s ease, box-shadow .25s ease;
+  text-align: center;
+  position: relative; /* ⭐ เพิ่มตรงนี้ เพื่อให้ .book-actions absolute ภายใน card */
+  min-height: 360px;  /* ⭐ กำหนดความสูงขั้นต่ำ เพื่อให้ปุ่มอยู่ข้างล่างเท่ากัน */
+}
+.card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+}
+
+/* IMAGE */
+.card img{
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: transform .3s ease;
+}
+
+.card:hover img{
+  transform: scale(1.06);
+}
+
+/* BODY */
+.body{
+  padding:18px;
+}
+.body h3{
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
+  font-size:18px;
+  margin-bottom:6px;
+}
+.body p{
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
+  font-size:14px;
+  color:var(--muted);
+  margin:4px 0;
+}
+
+/* STATUS BADGE */
+.status{
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
+  margin-top:12px;
+  display:inline-block;
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:700;
+}
+
+.borrowing{
+  background:rgba(245,158,11,.15);
+  color:#f59e0b;
+}
+.returned{
+  background:rgba(34,197,94,.15);
+  color:#22c55e;
+}
+.overdue{
+  background:rgba(239,68,68,.15);
+  color:#ef4444;
+}
+
+/* EMPTY */
+.empty{
+  font-family: "Prompt", sans-serif;
+  font-style: normal;
+  text-align:center;
+  padding:80px 20px;
+  color:#94a3b8;
+}

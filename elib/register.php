@@ -6,6 +6,7 @@ $success = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullname = $_POST['fullname'];
     $email    = $_POST['email'];
+    $phone = $_POST['phone'];
     $password = md5($_POST['password']);
 
     // เช็ค email ซ้ำ
@@ -13,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($check->num_rows > 0) {
         $error = "❌ อีเมลนี้ถูกใช้งานแล้ว";
     } else {
-        $sql = "INSERT INTO users (fullname, email, password, role)
-                VALUES ('$fullname', '$email', '$password', 'user')";
+        $sql = "INSERT INTO users (fullname, email, phone, password, role)
+                VALUES ('$fullname', '$email', '$phone', '$password', 'user')";
         if ($conn->query($sql)) {
             $success = "✅ สมัครสมาชิกสำเร็จ";
         } else {
@@ -56,11 +57,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="input-box">
+            <input type="phone" name="phone" placeholder="phone" required>
+            <i class="bx bx-phone"></i>
+        </div>
+
+        <div class="input-box">
             <input type="password" name="password" placeholder="Password" required>
             <i class="bx bxs-lock-alt"></i>
         </div>
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn">submit</button>
 
         <div class="register-link">
             <p>Already have an account? <a href="login.php">Login</a></p>
