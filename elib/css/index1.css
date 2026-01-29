@@ -1,55 +1,49 @@
-/* ================== INDEX PAGE ONLY ================= */
-
-.index-page .container {
+/* ================== E-LIBRARY INDEX PAGE ONLY ================== */
+#elib-index.index-page .container {
   max-width: 1200px;
   margin: auto;
   padding: 20px;
 }
 
-.index-page .section-title {
+#elib-index.index-page .section-title {
   font-family: "Prompt", sans-serif;
-  font-style: normal;
   font-size: 28px;
   font-weight: 700;
   color: #1e3a8a;
-  text-align: left;
   margin-bottom: 32px;
 }
 
 /* ===== Book Grid ===== */
-.index-page .book-list {
-  font-family: "Prompt", sans-serif;
-  font-style: normal;
+#elib-index.index-page .book-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* ⭐ ใช้ auto-fill แทน auto-fit */
-  justify-content: center;  /* ⭐ จัดกึ่งกลางเมื่อ card ไม่เต็ม row */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  justify-content: center;
   gap: 26px;
   align-items: stretch;
+  font-family: "Prompt", sans-serif;
 }
 
 /* ===== Book Card ===== */
-.index-page .book-card {
-  font-family: "Prompt", sans-serif;
-  font-style: normal;
-  background: #ffffff;
+#elib-index.index-page .book-card {
+  background: #fff;
   border-radius: 18px;
   box-shadow: 0 8px 22px rgba(0,0,0,0.08);
   padding: 18px;
   display: flex;
   flex-direction: column;
-  transition: transform .25s ease, box-shadow .25s ease;
   text-align: center;
-  position: relative; /* ⭐ เพิ่มตรงนี้ เพื่อให้ .book-actions absolute ภายใน card */
-  min-height: 360px;  /* ⭐ กำหนดความสูงขั้นต่ำ เพื่อให้ปุ่มอยู่ข้างล่างเท่ากัน */
+  position: relative;
+  min-height: 360px;
+  transition: transform .25s ease, box-shadow .25s ease;
 }
 
-.index-page .book-card:hover {
+#elib-index.index-page .book-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 14px 30px rgba(0,0,0,0.12);
 }
 
 /* ===== Cover ===== */
-.index-page .book-card img {
+#elib-index.index-page .book-card img {
   width: 100%;
   height: 260px;
   object-fit: cover;
@@ -58,45 +52,34 @@
   transition: transform .3s ease;
 }
 
-.index-page .book-card:hover img {
+#elib-index.index-page .book-card:hover img {
   transform: scale(1.06);
 }
 
 /* ===== Info ===== */
-.index-page .book-card h3 {
-  font-family: "Prompt", sans-serif;
-  font-style: normal;
+#elib-index.index-page .book-card h3,
+#elib-index.index-page .book-card a {
   font-size: 17px;
-  margin: 8px 0 4px;
   color: #1e3a8a;
+  margin: 8px 0 4px;
+  text-decoration: none;
 }
 
-.index-page .book-card a {
-  font-family: "Prompt", sans-serif;
-  font-style: normal;
-  font-size: 17px;
-  margin: 8px 0 4px;
-  color: #1e3a8a;
-}
-
-.index-page .book-card p {
-  font-family: "Prompt", sans-serif;
-  font-style: normal;
+#elib-index.index-page .book-card p {
   font-size: 14px;
   margin: 4px 0;
   color: #475569;
 }
 
 /* ===== Actions ===== */
-.index-page .book-actions {
+#elib-index.index-page .book-actions {
   position: absolute;
-  bottom: 14px;  /* ⭐ อยู่ล่างสุดของ card */
-  right: 14px;   /* ⭐ อยู่ขวาสุด */
+  bottom: 14px;
+  right: 14px;
   display: flex;
-  justify-content: flex-end;
 }
 
-.index-page .btn-fav {
+#elib-index.index-page .btn-fav {
   width: 42px;
   height: 42px;
   border-radius: 50%;
@@ -109,209 +92,129 @@
   transition: all .2s ease;
 }
 
-.index-page .btn-fav:hover {
+#elib-index.index-page .btn-fav:hover {
   background: #fde68a;
 }
 
-.index-page .btn-fav.active {
+#elib-index.index-page .btn-fav.active {
   background: #facc15;
 }
 
 /* ================== NEWS SLIDER ================== */
-.news-slider {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    margin: 30px auto;
+#elib-index .news-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 30px auto;
 }
 
-.news-slides {
-    display: flex;
-    width: 100%;
-    height: 550px;
-    transition: transform 0.8s ease;
+#elib-index .news-slides {
+  display: flex;
+  height: 550px;
+  transition: transform .8s ease;
 }
 
-.news-slides img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    flex-shrink: 0;
-    object-fit: cover;
-    object-position: center top;
+#elib-index .news-slides img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
-/* โซนคลิก */
-.slide-zone {
-    position: absolute;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    z-index: 10;
-    cursor: pointer;
+/* slide zones */
+#elib-index .slide-zone {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 10;
 }
 
-/* ซ้าย / ขวา */
-.prev-zone { left: 0; }
-.next-zone { right: 0; }
+#elib-index .prev-zone { left: 0; }
+#elib-index .next-zone { right: 0; }
 
-/* ลูกศรจาง ๆ */
-.slide-zone::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 42px;
-    color: rgba(255,255,255,.85);
-    opacity: 0;
-    transition: opacity .25s ease, transform .25s ease;
-    pointer-events: none;
+#elib-index .slide-zone::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 42px;
+  color: rgba(255,255,255,.85);
+  opacity: 0;
+  transition: .25s;
 }
 
-/* ลูกศรซ้าย */
-.prev-zone::after {
-    content: '‹';
-    left: 24px;
+#elib-index .prev-zone::after { content: '‹'; left: 24px; }
+#elib-index .next-zone::after { content: '›'; right: 24px; }
+
+#elib-index .news-slider:hover .slide-zone::after {
+  opacity: .8;
 }
 
-/* ลูกศรขวา */
-.next-zone::after {
-    content: '›';
-    right: 24px;
+/* indicators */
+#elib-index .indicators {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
 }
 
-/* hover ค่อย ๆ โผล่ */
-.news-slider:hover .slide-zone::after {
-    opacity: .8;
+#elib-index .indicators span {
+  width: 10px;
+  height: 10px;
+  background: rgba(255,255,255,.5);
+  display: inline-block;
+  border-radius: 50%;
+  margin: 0 5px;
 }
 
-/* hover effect */
-.slide-zone:hover::after {
-    transform: translateY(-50%) scale(1.1);
+#elib-index .indicators span.active {
+  background: #fff;
 }
 
-/* indicator */
-.indicators {
-    position: absolute;
-    bottom: 15px;
-    width: 100%;
-    text-align: center;
-}
-.indicators span {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin: 0 5px;
-    background: rgba(255,255,255,.5);
-    border-radius: 50%;
-}
-.indicators span.active {
-    background: #fff;
+/* ================== PAGINATION ================== */
+#elib-index .pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 40px 0;
 }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin: 40px 0;
+#elib-index .pagination a,
+#elib-index .pagination span {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #e5e7eb;
+  color: #111;
+  text-decoration: none;
+  transition: .2s;
 }
 
-.pagination a {
-    padding: 8px 14px;
-    border-radius: 8px;
-    background: #e5e7eb;
-    color: #111;
-    text-decoration: none;
-    font-weight: 500;
+#elib-index .pagination a.active {
+  background: #3b82f6;
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(59,130,246,.35);
 }
 
-.pagination a.active {
-    background: #3b82f6;
-    color: #fff;
+#elib-index .pagination a:not(.active):hover {
+  background: #2563eb;
+  color: #fff;
+  transform: translateY(-2px);
 }
 
-.pagination a:hover {
-    background: #2563eb;
-    color: #fff;
+#elib-index .pagination .disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
+  pointer-events: none;
+  opacity: .7;
 }
 
-/* ================== PAGINATION DISABLED STATE ================== */
-
-/* ปุ่มที่กดไม่ได้ */
-.pagination .disabled {
-    background: #f3f4f6;        /* เทาอ่อน */
-    color: #9ca3af;             /* ตัวอักษรจาง */
-    cursor: not-allowed;
-    pointer-events: none;       /* คลิกไม่ได้จริง */
-    box-shadow: none;
-    opacity: 0.7;
-}
-
-/* กัน hover */
-.pagination .disabled:hover {
-    background: #f3f4f6;
-    color: #9ca3af;
-}
-
-/* Prev / Next */
-.pagination .nav {
-    font-weight: 600;
-}
-
-/* Disabled + Nav */
-.pagination .disabled.nav {
-    background: #f1f5f9;
-    color: #94a3b8;
-}
-
-/* จุด ... */
-.pagination .dots {
-    background: transparent;
-    padding: 0 6px;
-    color: #94a3b8;
-    cursor: default;
-}
-
-/* ================== PAGINATION ACTIVE FEEL ================== */
-
-/* ปุ่มที่กดได้ เพิ่ม effect */
-.pagination a {
-    transition: all 0.2s ease;
-}
-
-/* hover เฉพาะที่กดได้ */
-.pagination a:not(.active):hover {
-    transform: translateY(-2px);
-}
-
-/* active */
-.pagination a.active {
-    box-shadow: 0 6px 14px rgba(59,130,246,0.35);
-}
-
-/* ================== MOBILE ================== */
-@media (max-width: 600px) {
-    .pagination a,
-    .pagination span {
-        padding: 6px 10px;
-        font-size: 14px;
-    }
-}
-
-/* Mobile */
+/* ================== RESPONSIVE ================== */
 @media (max-width: 768px) {
-    .news-slides {
-        height: 200px;
-    }
+  #elib-index .news-slides { height: 200px; }
 
-    .news-slides img {
-        max-height: 200px;
-    }
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .index-page .book-list {
+  #elib-index.index-page .book-list {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 18px;
   }

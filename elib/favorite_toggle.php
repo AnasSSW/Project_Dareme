@@ -1,48 +1,90 @@
 <?php
-include "db.php";
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-if (!isset($_SESSION)) {
-  session_start();
-}
+header('Content-Type: application/json');
 
+session_start();
+require_once 'db.php';
+
+/* ==================== CHECK LOGIN ==================== */
 if (!isset($_SESSION['user'])) {
-  header("Location: login.php");
-  exit;
+    echo json_encode([
+        'success' => false,
+        'message' => 'กรุณาเข้าสู่ระบบ'
+    ]);
+    exit;
 }
 
-$user_id = intval($_SESSION['user']['id']);
-$book_id = intval($_GET['id'] ?? 0);
-
-if ($book_id === 0) {
-  header("Location: index.php");
-  exit;
+/* ==================== CHECK REQUEST ==================== */
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Invalid request'
+    ]);
+    exit;
 }
 
-/* เช็คว่ามีในรายการโปรดหรือยัง */
-$chk = $conn->query(
-  "SELECT id FROM favorites 
-   WHERE user_id = $user_id AND book_id = $book_id"
-);
-
-if ($chk === false) {
-  die("DB Error: " . $conn->error);
+if (!isset($_POST['book_id']) || !is_numeric($_POST['book_id'])) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'ไม่พบ book_id'
+    ]);
+    exit;
 }
 
-if ($chk->num_rows > 0) {
-  // ลบออก
-  $conn->query(
-    "DELETE FROM favorites 
-     WHERE user_id = $user_id AND book_id = $book_id"
-  );
-} else {
-  // เพิ่มเข้า
-  $conn->query(
-    "INSERT INTO favorites (user_id, book_id) 
-     VALUES ($user_id, $book_id)"
-  );
+$user_id = (int)$_SESSION['user']['id'];
+$book_id = (int)$_POST['book_id'];
+
+/* ==================== TOGGLE FAVORITE ==================== */
+try {
+
+    // เช็คว่ามีอยู่แล้วหรือไม่
+    $stmt = $conn->prepare(
+        "SELECT id FROM favorites WHERE user_id = ? AND book_id = ?"
+    );
+    $stmt->bind_param("ii", $user_id, $book_id);
+    $stmt->execute();
+    $res = $stmt->get_result();
+
+    if ($res->num_rows > 0) {
+        // ลบออก
+        $stmt->close();
+        $stmt = $conn->prepare(
+            "DELETE FROM favorites WHERE user_id = ? AND book_id = ?"
+        );
+        $stmt->bind_param("ii", $user_id, $book_id);
+        $stmt->execute();
+
+        echo json_encode([
+            'success'    => true,
+            'action'     => 'removed',
+            'isFavorite' => false
+        ]);
+    } else {
+        // เพิ่มเข้า
+        $stmt->close();
+        $stmt = $conn->prepare(
+            "INSERT INTO favorites (user_id, book_id) VALUES (?, ?)"
+        );
+        $stmt->bind_param("ii", $user_id, $book_id);
+        $stmt->execute();
+
+        echo json_encode([
+            'success'    => true,
+            'action'     => 'added',
+            'isFavorite' => true
+        ]);
+    }
+
+    $stmt->close();
+
+} catch (Exception $e) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Database error'
+    ]);
 }
 
-/* กลับหน้าที่กดมา */
-$back = $_SERVER['HTTP_REFERER'] ?? 'index.php';
-header("Location: $back");
+$conn->close();
 exit;

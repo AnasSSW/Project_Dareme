@@ -66,7 +66,7 @@ $result = $conn->query($sql);
   <meta charset="UTF-8">
   <title>คืนหนังสือ</title>
   <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/return1.css">
+  <link rel="stylesheet" href="css/return.css">
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Itim&family=Prompt:wght@400;600;700&display=swap');
